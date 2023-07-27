@@ -1,23 +1,20 @@
 import { Route, Routes } from 'react-router-dom';
 
-import { Home } from './Components';
-
-import styled from 'styled-components';
+import { Cart, Home, Layout, Login, Signup } from './Components';
 
 import './App.css';
 
 function App() {
 	return (
-		<Container>
+		<Layout>
 			<Routes>
 				<Route path="/" element={<Home />} />
+				<Route path="/signup" element={<Signup />} />
+				<Route path="/login" element={<Login />} />
+				<Route path="/cart" element={<Cart />} />
 			</Routes>
-		</Container>
+		</Layout>
 	);
 }
-
-const Container = styled.div`
-	// margin-inline: 10rem;
-`;
 
 export default App;

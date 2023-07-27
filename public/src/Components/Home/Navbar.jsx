@@ -14,7 +14,7 @@ const Navbar = () => {
 	const HandleSearchClick = (e) => {
 		console.log(e.target.value);
 	};
-	const pass = () => {};
+	const pass = () => { };
 	return (
 		<NavContainer>
 			<Container>
@@ -45,15 +45,15 @@ const Navbar = () => {
 					</SearchIconContainer>
 				</SearchContainer>
 				<LoginCartContainer>
-					<ProfileContainer>
+					<ProfileLink to="/signup">
 						<CgProfile size={25} />
-						<ProfileLink to="/login">Login</ProfileLink>
-					</ProfileContainer>
+						Sign up
+					</ProfileLink>
 
-					<ProfileContainer>
+					<ProfileLink to="/cart">
 						<AiOutlineShoppingCart size={25} />
-						<ProfileLink to="/cart">Cart</ProfileLink>
-					</ProfileContainer>
+						Cart
+					</ProfileLink>
 				</LoginCartContainer>
 			</Container>
 		</NavContainer>
@@ -64,6 +64,7 @@ const NavContainer = styled.div`
 	min-height: 8vh;
 	background-color: #212a3e;
 	padding-inline: 10px;
+	box-shadow: 1px 2px 8px rgba(33, 42, 62, 0.1);
 `;
 
 const Container = styled.div`
@@ -141,17 +142,14 @@ const SearchIconContainer = styled.div`
 	cursor: pointer;
 `;
 
-const ProfileContainer = styled.div`
+const ProfileLink = styled(Link)`
+	text-decoration: none;
+	color: inherit;
 	display: flex;
 	flex-direction: column;
 	justify-content: start;
 	align-items: center;
-	// border: 2px solid red;
-`;
-
-const ProfileLink = styled(Link)`
-	text-decoration: none;
-	color: inherit;
+	cursor: pointer;
 `;
 
 const LoginCartContainer = styled.div`

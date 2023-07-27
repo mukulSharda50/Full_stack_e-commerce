@@ -1,18 +1,16 @@
-import Navbar from './Navbar';
+import Hero from './Hero';
+import Tile from './Tile';
 
-import styled from 'styled-components';
 
 const Home = () => {
 	return (
-		<Container>
-			<Navbar />
+		<div>
+			<Hero />
+			<Tile title={"Deal of the day"} />
+			<Tile title={"Top picks"} />
 			home
-		</Container>
+		</div>
 	);
 };
-
-const Container = styled.div`
-	// padding-inline: 5rem;
-`;
 
 export default Home;
