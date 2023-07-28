@@ -20,7 +20,37 @@ const Login = () => {
             }
         });
     };
-    const onSubmit = (data) => console.log(data);
+    const showSuccessToast = (msg) => {
+        toast.success(msg, {
+            position: 'bottom-right',
+            duration: 2000,
+            ariaProps: {
+                role: 'alert',
+                'aria-live': 'sucess',
+            }
+        });
+    };
+    const onSubmit = (data) => {
+        console.log(data);
+        fetch('http://localhost:5000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Network error.");
+                return response.json();
+            })
+            .then(returnedData => {
+                showSuccessToast("Success");
+                localStorage.setItem("_TOKEN", returnedData.token);
+            })
+            .catch(error => {
+                showErrorToast(`Error ${error}`);
+            })
+    }
 
     return (
         <Container>
@@ -29,10 +59,10 @@ const Login = () => {
                 <FormContainer>
                     <InputFieldContainer>
                         {
-                            errors.userName?.type === "required" ? showErrorToast("Username is required") : ''
+                            errors.username?.type === "required" ? showErrorToast("Username is required") : ''
                         }
                         <label>Username</label>
-                        <Input {...register('userName', { required: 'Username is required!!', maxLength: 255 })} />
+                        <Input {...register('username', { required: true, maxLength: 255 })} />
                     </InputFieldContainer>
 
                     <InputFieldContainer>

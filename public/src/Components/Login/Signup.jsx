@@ -20,7 +20,40 @@ const Signup = () => {
 			}
 		});
 	};
-	const onSubmit = (data) => console.log(data);
+	const showSuccessToast = (msg) => {
+		toast.success(msg, {
+			position: 'bottom-right',
+			duration: 2000,
+			ariaProps: {
+				role: 'alert',
+				'aria-live': 'sucess',
+			}
+		});
+	};
+	const onSubmit = (data) => {
+		fetch('http://localhost:5000/signup', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error("Network error.");
+				}
+				return response.json();
+			})
+			.then((returnedData) => {
+				// Handle the response from the backend, e.g., show a success message, redirect, etc.
+				showSuccessToast("success");
+				localStorage.setItem('_TOKEN', JSON.stringify(returnedData.token));
+			})
+			.catch((error) => {
+				// Handle errors, e.g., display an error message
+				showErrorToast(`Error when processing.${error}`);
+			});
+	};
 
 	return (
 		<Container>
@@ -29,10 +62,18 @@ const Signup = () => {
 				<FormContainer>
 					<InputFieldContainer>
 						{
+							errors.username?.type === "required" ? showErrorToast("Username is required") : ''
+						}
+						<label>Username</label>
+						<Input {...register('username', { required: true, maxLength: 255 })} />
+					</InputFieldContainer>
+
+					<InputFieldContainer>
+						{
 							errors.firstName?.type === "required" ? showErrorToast("First Name is required") : ''
 						}
 						<label>First Name</label>
-						<Input {...register('firstName', { required: 'First Name is required!!', maxLength: 255 })} />
+						<Input {...register('firstName', { required: true, maxLength: 255 })} />
 					</InputFieldContainer>
 
 					<InputFieldContainer>
@@ -63,6 +104,14 @@ const Signup = () => {
 						<label>Phone Number</label>
 						<Input {...register('phone', { required: true, maxLength: 10, minLength: 10 })} type="number" />
 					</InputFieldContainer>
+					<InputFieldContainer>
+						{
+							errors.password?.type === "required" ? showErrorToast("Password is required") : ''
+						}
+						<label>Password</label>
+						<Input {...register('password', { required: true, maxLength: 255 })} type="password" />
+					</InputFieldContainer>
+
 				</FormContainer>
 				<SubmitBtn type="submit" value="Submit" />
 				<Span>
@@ -93,7 +142,7 @@ const Signup = () => {
 
 const Container = styled.div`
 	color: black;
-	margin-top: 5rem;
+	margin-top: 1rem;
 	margin-inline: 15rem;
 	height: 50vh;
 	min-width: 50vw;
@@ -109,7 +158,8 @@ const LoginForm = styled.form`
 	justify-content: space-evenly;
 	width: 80%;
 	height: 100%;
-	gap: 1rem;
+	gap: 0.6rem;
+	// border: 2px solid black;
 `;
 
 const InputFieldContainer = styled.div`
@@ -142,6 +192,7 @@ const FormContainer = styled.div`
 	display: grid;
 	place-items: center;
 	width: 50%;
+	gap: 0.7rem;
 	// border: 2px solid black;
 `;
 
@@ -152,7 +203,7 @@ const SubmitBtn = styled.input.attrs({
 	border: none;
 	outline: none;
 	box-shadow: none;
-	margin-bottom: 20px;
+	margin-bottom: 5px;
 	height: 40px;
 	width: 40%;
 	cursor: pointer;
