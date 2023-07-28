@@ -3,7 +3,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Login = () => {
+const Signup = () => {
 	const {
 		register,
 		handleSubmit,
@@ -107,8 +107,6 @@ const LoginForm = styled.form`
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-evenly;
-	background-color: #F1F6F9;
-	box-shadow: 1px 2px 8px rgba(33, 42, 62, 0.1);
 	width: 80%;
 	height: 100%;
 	gap: 1rem;
@@ -164,9 +162,11 @@ const SubmitBtn = styled.input.attrs({
 	background-color: #212A3E;
 	color: #F1F6F9;
 	border-radius: 5px;
+	transition: all 0.3s;
 	&:hover{
-		background-color: #F1F6F9;
-		color: #212A3E;
+		background: #bdc3c7;  /* fallback for old browsers */
+		background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+		background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 	}
 `;
 
@@ -182,4 +182,4 @@ const LoginLink = styled(Link)`
 	color: inherit;
 `;
 
-export default Login;
+export default Signup;

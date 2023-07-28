@@ -64,6 +64,11 @@ const NavContainer = styled.div`
 	min-height: 8vh;
 	background-color: #212a3e;
 	padding-inline: 10px;
+
+	// background: #F0F2F0;  /* fallback for old browsers */
+	// background: -webkit-linear-gradient(to bottom, #000C10, #F0F2F0);  /* Chrome 10-25, Safari 5.1-6 */
+	// background: linear-gradient(to bottom, #000C40, #F0F2F0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 	box-shadow: 1px 2px 8px rgba(33, 42, 62, 0.1);
 `;
 

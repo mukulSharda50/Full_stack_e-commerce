@@ -73,10 +73,10 @@ const Tile = ({ title }) => {
 
 const Container = styled.div`
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 10px 5px;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 1rem;
     margin: 1rem 0;
-    // padding-inline: 3rem;
+    padding-inline: 1rem;
     cursor: pointer;
     overflow-x: hidden;
 `;

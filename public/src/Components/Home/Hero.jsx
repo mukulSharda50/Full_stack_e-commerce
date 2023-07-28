@@ -14,13 +14,13 @@ const Hero = () => {
 				showThumbs={false}
 			>
 				<div>
-					<img src="https://random.imagecdn.app/500/151" alt="random" />
+					<img src="https://random.imagecdn.app/500/151" alt="random" loading='lazy' />
 				</div>
 				<div>
-					<img src="https://random.imagecdn.app/500/151" alt="random" />
+					<img src="https://random.imagecdn.app/500/151" alt="random" loading='lazy' />
 				</div>
 				<div>
-					<img src="https://random.imagecdn.app/500/152" alt="random" />
+					<img src="https://random.imagecdn.app/500/152" alt="random" loading='lazy' />
 				</div>
 			</Carousel>
 		</Container>

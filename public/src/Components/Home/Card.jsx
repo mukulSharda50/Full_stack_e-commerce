@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Card = ({ imgSrc, imgAlt, price, title }) => {
     return (
         <Container>
-            <Img src={imgSrc} alt={imgAlt} />
+            <Img src={imgSrc} alt={imgAlt} loading='lazy' />
             {title}
             {price}
         </Container>
