@@ -2,48 +2,42 @@ import styled from "styled-components";
 import Card from "./Card";
 
 import { Carousel } from 'react-responsive-carousel';
+import { Link } from "react-router-dom";
 const data = [
     {
         imgSrc: "https://random.imagecdn.app/500/151",
         imgAlt: "random",
-        title: "Shirt",
-        price: "Under 899"
+        price: "899"
     },
     {
         imgSrc: "https://random.imagecdn.app/500/131",
         imgAlt: "random",
-        title: "T-Shirt",
-        price: "Under 1299"
+        price: "1299"
     },
     {
         imgSrc: "https://random.imagecdn.app/500/161",
         imgAlt: "random",
-        title: "Jeans",
-        price: "Under 899"
+        price: "899"
     },
     {
         imgSrc: "https://random.imagecdn.app/500/151",
         imgAlt: "random",
-        title: "Shirt",
-        price: "Under 899"
+        price: "899"
     },
     {
         imgSrc: "https://random.imagecdn.app/500/131",
         imgAlt: "random",
-        title: "T-Shirt",
-        price: "Under 1299"
+        price: "1299"
     },
     {
         imgSrc: "https://random.imagecdn.app/500/161",
         imgAlt: "random",
-        title: "Jeans",
-        price: "Under 899"
+        price: "899"
     },
     {
         imgSrc: "https://random.imagecdn.app/500/151",
         imgAlt: "random",
-        title: "Shirt",
-        price: "Under 899"
+        price: "899"
     },
 ]
 
@@ -56,13 +50,13 @@ const Tile = ({ title }) => {
             <Container>
                 {
                     data.map((dataItem, index) => (
-                        <div key={index}>
+                        <CardLink key={index} to={`/products/${dataItem.price}`}>
                             <Card
                                 imgSrc={dataItem.imgSrc}
                                 imgAlt={dataItem.imgAlt}
-                                price={dataItem.price}
-                                title={dataItem.title} />
-                        </div>
+                                price={`Under Rs.${dataItem.price}`}
+                            />
+                        </CardLink>
                     ))
                 }
             </Container>
@@ -79,6 +73,11 @@ const Container = styled.div`
     padding-inline: 1rem;
     cursor: pointer;
     overflow-x: hidden;
+`;
+
+const CardLink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
 `;
 
 export default Tile

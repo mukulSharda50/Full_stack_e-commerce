@@ -27,6 +27,6 @@ const Hero = () => {
 	);
 };
 const Container = styled.div`
-	padding-top: 1rem;
+	
 `;
 export default Hero;

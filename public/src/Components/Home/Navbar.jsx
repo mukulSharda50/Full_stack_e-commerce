@@ -8,12 +8,16 @@ import styled from 'styled-components';
 
 const Navbar = () => {
 	const [search, onSearchChange] = useState('');
+	let isLoggedIn = false;
 	const HandleInputSearch = (e) => {
 		onSearchChange(e.target.value);
 	};
 	const HandleSearchClick = (e) => {
 		console.log(e.target.value);
 	};
+	if (localStorage.getItem("_TOKEN")) {
+		isLoggedIn = true;
+	}
 	const pass = () => { };
 	return (
 		<NavContainer>

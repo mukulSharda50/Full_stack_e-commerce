@@ -1,9 +1,10 @@
 import { useForm } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Signup = () => {
+	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
@@ -48,6 +49,7 @@ const Signup = () => {
 				// Handle the response from the backend, e.g., show a success message, redirect, etc.
 				showSuccessToast("success");
 				localStorage.setItem('_TOKEN', JSON.stringify(returnedData.token));
+				navigate('/');
 			})
 			.catch((error) => {
 				// Handle errors, e.g., display an error message

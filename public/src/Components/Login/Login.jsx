@@ -1,9 +1,10 @@
 import { useForm } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Login = () => {
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -46,6 +47,7 @@ const Login = () => {
             .then(returnedData => {
                 showSuccessToast("Success");
                 localStorage.setItem("_TOKEN", returnedData.token);
+                navigate('/');
             })
             .catch(error => {
                 showErrorToast(`Error ${error}`);
