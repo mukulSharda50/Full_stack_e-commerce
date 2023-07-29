@@ -1,7 +1,8 @@
 import { useForm } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+
+import { ShowErrorToast, ShowSuccessToast } from '../Toast';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -11,26 +12,6 @@ const Login = () => {
         formState: { errors },
     } = useForm();
 
-    const showErrorToast = (msg) => {
-        toast.error(msg, {
-            position: 'bottom-right',
-            duration: 2000,
-            ariaProps: {
-                role: 'alert',
-                'aria-live': 'error',
-            }
-        });
-    };
-    const showSuccessToast = (msg) => {
-        toast.success(msg, {
-            position: 'bottom-right',
-            duration: 2000,
-            ariaProps: {
-                role: 'alert',
-                'aria-live': 'sucess',
-            }
-        });
-    };
     const onSubmit = (data) => {
         console.log(data);
         fetch('http://localhost:5000/login', {
@@ -45,44 +26,46 @@ const Login = () => {
                 return response.json();
             })
             .then(returnedData => {
-                showSuccessToast("Success");
+                ShowSuccessToast("Success");
                 localStorage.setItem("_TOKEN", returnedData.token);
                 navigate('/');
             })
             .catch(error => {
-                showErrorToast(`Error ${error}`);
+                ShowErrorToast(`Error ${error}`);
             })
     }
 
     return (
-        <Container>
-            <LoginForm onSubmit={handleSubmit(onSubmit)}>
-                <FormTitle>Log in</FormTitle>
-                <FormContainer>
-                    <InputFieldContainer>
-                        {
-                            errors.username?.type === "required" ? showErrorToast("Username is required") : ''
-                        }
+        <div>
+            <form onSubmit={handleSubmit(onSubmit)} className='grid grid-cols-1 place-items-center my-2 mt-[2rem]'>
+                <div>
+                    <div>
                         <label>Username</label>
-                        <Input {...register('username', { required: true, maxLength: 255 })} />
-                    </InputFieldContainer>
-
-                    <InputFieldContainer>
+                        <input {...register('username', { required: true, maxLength: 255 })}
+                            placeholder='john_doe'
+                            className='placeholder:italic placeholder:text-slate-400 block w-[100%]  border-slate-300 rounded-md py-1 px-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm border' />
                         {
-                            errors.password?.type === "required" ? showErrorToast("Password is required") : ''
+                            errors.username && <p className='text-red-500 '>Username is required</p>
                         }
+                    </div>
+
+                    <div>
                         <label>Password</label>
-                        <Input {...register('password', { required: true })} type="password" />
-                    </InputFieldContainer>
-                </FormContainer>
-                <SubmitBtn type="submit" value="Submit" />
-                <Span>
+                        <input {...register('password', { required: true, maxLength: 255 })} type="password" className='placeholder:italic placeholder:text-slate-400 block bg-white w-[100%] border-slate-300 rounded-md py-1 px-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm border'
+                            placeholder='********' />
+                        {
+                            errors.password && <p className='text-red-500 '>Password is required</p>
+                        }
+                    </div>
+                    <input type="submit" value="Submit" className='bg-rose-400 w-[100%] py-1 px-3 rounded-md text-slate-100 mt-2' />
+                </div>
+                <span className='flex items-center mt-1 gap-1'>
                     <p>Not a member?</p>
-                    <LoginLink to='/signup'>
+                    <Link to='/signup' className='underline'>
                         Sign up
-                    </LoginLink>
-                </Span>
-            </LoginForm>
+                    </Link>
+                </span>
+            </form>
 
             <Toaster
                 toastOptions={{
@@ -98,102 +81,8 @@ const Login = () => {
                     },
                 }}
             />
-        </Container>
+        </div>
     );
 };
-
-const Container = styled.div`
-	color: black;
-	margin-top: 5rem;
-	margin-inline: 15rem;
-	height: 50vh;
-	min-width: 50vw;
-	display: grid;
-	place-items: center;
-`;
-
-const LoginForm = styled.form`
-	color: inherit;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-evenly;
-	background-color: #F5F5F5;
-	// box-shadow: 1px 2px 8px rgba(33, 42, 62, 0.1);
-	width: 80%;
-	height: 100%;
-	gap: 1rem;
-`;
-
-const InputFieldContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	width: 80%;
-	gap: 2px;
-	// border: 1px solid pink;
-`;
-
-const Input = styled.input`
-	outline: none;
-	border: none;
-	border-radius: 7px;
-	height: 40px;
-	width: 100%;
-	border: 1px solid lightgray;
-	background-color: #F1F6F9;
-	// box-shadow: inset 0 0 10px #000000;
-`;
-
-const FormTitle = styled.p`
-	margin-top: 1.2rem;
-	color:#212A3E;
-	text-transform: uppercase;
-	font-size: 1.5rem;
-`;
-
-const FormContainer = styled.div`
-	display: grid;
-	place-items: center;
-	width: 50%;
-`;
-
-const SubmitBtn = styled.input.attrs({
-    type: 'submit',
-    value: 'Submit'
-})`
-	border: none;
-	outline: none;
-	box-shadow: none;
-	margin-bottom: 5px;
-	height: 40px;
-	width: 40%;
-	cursor: pointer;
-	font-size: 1rem;
-	text-transform: uppercase;
-	letter-spacing: 1px;
-	background-color: #212A3E;
-	color: #F1F6F9;
-	border-radius: 5px;
-    transition: all 0.3s;
-	&:hover{
-		background: #bdc3c7;  /* fallback for old browsers */
-		background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
-		background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-		// color: #212A3E;
-        
-	}
-`;
-
-const Span = styled.span`
-	display: flex;
-	justify-content: space-evenly;
-	align-items: center;
-	gap: 5px;
-`;
-
-const LoginLink = styled(Link)`
-	text-decoration: underline;
-	color: inherit;
-`;
 
 export default Login;

@@ -1,7 +1,8 @@
 import { useForm } from 'react-hook-form';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+
+import { ShowErrorToast, ShowSuccessToast } from '../Toast';
 
 const Signup = () => {
 	const navigate = useNavigate();
@@ -11,26 +12,6 @@ const Signup = () => {
 		formState: { errors },
 	} = useForm();
 
-	const showErrorToast = (msg) => {
-		toast.error(msg, {
-			position: 'bottom-right',
-			duration: 2000,
-			ariaProps: {
-				role: 'alert',
-				'aria-live': 'error',
-			}
-		});
-	};
-	const showSuccessToast = (msg) => {
-		toast.success(msg, {
-			position: 'bottom-right',
-			duration: 2000,
-			ariaProps: {
-				role: 'alert',
-				'aria-live': 'sucess',
-			}
-		});
-	};
 	const onSubmit = (data) => {
 		fetch('http://localhost:5000/signup', {
 			method: 'POST',
@@ -47,82 +28,77 @@ const Signup = () => {
 			})
 			.then((returnedData) => {
 				// Handle the response from the backend, e.g., show a success message, redirect, etc.
-				showSuccessToast("success");
+				<ShowSuccessToast msg={"success"} />
 				localStorage.setItem('_TOKEN', JSON.stringify(returnedData.token));
 				navigate('/');
 			})
 			.catch((error) => {
 				// Handle errors, e.g., display an error message
-				showErrorToast(`Error when processing.${error}`);
+				return ShowErrorToast(`Error when processing.${error}`);
 			});
 	};
 
 	return (
-		<Container>
-			<LoginForm onSubmit={handleSubmit(onSubmit)}>
-				<FormTitle>sign up</FormTitle>
-				<FormContainer>
-					<InputFieldContainer>
-						{
-							errors.username?.type === "required" ? showErrorToast("Username is required") : ''
-						}
+		<>
+			<form onSubmit={handleSubmit(onSubmit)} className='grid grid-cols-1 place-items-center my-2 mt-[2rem]'>
+				<div className='w-[50%] grid place-items-center gap-3'>
+					<div>
 						<label>Username</label>
-						<Input {...register('username', { required: true, maxLength: 255 })} />
-					</InputFieldContainer>
+						<input {...register('username', { required: true, maxLength: 255 })}
+							placeholder='john_doe'
+							className='placeholder:italic placeholder:text-slate-400 block bg-white w-[100%]  border-slate-300 rounded-md py-1 px-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm' />
+						{
+							errors.username && <p className='text-red-500 '>Username is required</p>
+						}
+					</div>
+					<div>
+						<label>Name</label>
+						<input {...register('name', { required: true, maxLength: 255 })} placeholder='john'
+							className='placeholder:italic placeholder:text-slate-400 block bg-white w-[100%] border-slate-300 rounded-md py-1 px-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm' />
+						{
+							errors.name && <p className='text-red-500 '>Name is required</p>
+						}
+					</div>
 
-					<InputFieldContainer>
+					<div>
+						<label>Email-id</label>
+						<input {...register('email', { required: true })}
+							placeholder='john_doe@email.com' className='placeholder:italic placeholder:text-slate-400 block bg-white w-[100%] border-slate-300 rounded-md py-1 px-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm' />
 						{
-							errors.firstName?.type === "required" ? showErrorToast("First Name is required") : ''
+							errors.email && <p className='text-red-500 '>Email is required</p>
 						}
-						<label>First Name</label>
-						<Input {...register('firstName', { required: true, maxLength: 255 })} />
-					</InputFieldContainer>
+					</div>
 
-					<InputFieldContainer>
-						{
-							errors.lastName?.type === "required" ? showErrorToast("Last Name is required") : ''
-						}
-						<label>Last Name</label>
-						<Input {...register('lastName', { required: true })} />
-					</InputFieldContainer>
+					<div>
 
-					<InputFieldContainer>
+						<label>Phone No.</label>
+						<input {...register('phone', { required: true })} type="91384-58692" placeholder='john_doe'
+							className='placeholder:italic placeholder:text-slate-400 block bg-white w-[100%] border-slate-300 rounded-md py-1 px-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm' />
 						{
-							errors.email?.type === "required" ? showErrorToast("Email-id is required") : ''
+							errors.phone && <p className='text-red-500 '>Phone is required</p>
 						}
-						<label>Email-Id</label>
-						<Input {...register('email', { required: true })} />
-					</InputFieldContainer>
-					<InputFieldContainer>
-						{
-							errors.phone?.type === "required" ? showErrorToast("Phone is required") : ''
-						}
-						{
-							errors.phone?.type === "maxLength" ? showErrorToast("Phone number exceeds 10 digits") : ''
-						}
-						{
-							errors.phone?.type === "minLength" ? showErrorToast("Phone number less than 10 digits") : ''
-						}
-						<label>Phone Number</label>
-						<Input {...register('phone', { required: true, maxLength: 10, minLength: 10 })} type="number" />
-					</InputFieldContainer>
-					<InputFieldContainer>
-						{
-							errors.password?.type === "required" ? showErrorToast("Password is required") : ''
-						}
+					</div>
+
+					<div>
 						<label>Password</label>
-						<Input {...register('password', { required: true, maxLength: 255 })} type="password" />
-					</InputFieldContainer>
-
-				</FormContainer>
-				<SubmitBtn type="submit" value="Submit" />
-				<Span>
+						<input {...register('password', { required: true, maxLength: 255 })} type="password" className='placeholder:italic placeholder:text-slate-400 block bg-white w-[100%] border-slate-300 rounded-md py-1 px-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm'
+							placeholder='********' />
+						{
+							errors.password && <p className='text-red-500 '>Password is required</p>
+						}
+					</div>
+					<input
+						type="submit"
+						value="Submit"
+						className='bg-rose-400 w-[100%] py-1 px-3 rounded-md text-slate-100 mt-2' />
+				</div>
+				<span className='flex items-center mt-1 gap-1'>
 					<p>Already a member?</p>
-					<LoginLink to='/login'>
+					<Link to='/login' className='underline'>
 						Log in
-					</LoginLink>
-				</Span>
-			</LoginForm>
+					</Link>
+				</span>
+			</form>
 
 			<Toaster
 				toastOptions={{
@@ -138,101 +114,8 @@ const Signup = () => {
 					},
 				}}
 			/>
-		</Container>
+		</>
 	);
 };
-
-const Container = styled.div`
-	color: black;
-	margin-top: 1rem;
-	margin-inline: 15rem;
-	height: 50vh;
-	min-width: 50vw;
-	display: grid;
-	place-items: center;
-`;
-
-const LoginForm = styled.form`
-	color: inherit;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-evenly;
-	width: 80%;
-	height: 100%;
-	gap: 0.6rem;
-	// border: 2px solid black;
-`;
-
-const InputFieldContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	width: 80%;
-	gap: 2px;
-	// border: 1px solid pink;
-`;
-
-const Input = styled.input`
-	outline: none;
-	border: none;
-	border-radius: 7px;
-	height: 40px;
-	width: 100%;
-	border: 1px solid lightgray;
-	background-color: #F1F6F9;
-	// box-shadow: inset 0 0 10px #000000;
-`;
-
-const FormTitle = styled.p`
-	margin-top: 1.2rem;
-	color:#212A3E;
-	text-transform: uppercase;
-	font-size: 1.5rem;
-`;
-
-const FormContainer = styled.div`
-	display: grid;
-	place-items: center;
-	width: 50%;
-	gap: 0.7rem;
-	// border: 2px solid black;
-`;
-
-const SubmitBtn = styled.input.attrs({
-	type: 'submit',
-	value: 'Submit'
-})`
-	border: none;
-	outline: none;
-	box-shadow: none;
-	margin-bottom: 5px;
-	height: 40px;
-	width: 40%;
-	cursor: pointer;
-	font-size: 1rem;
-	text-transform: uppercase;
-	letter-spacing: 1px;
-	background-color: #212A3E;
-	color: #F1F6F9;
-	border-radius: 5px;
-	transition: all 0.3s;
-	&:hover{
-		background: #bdc3c7;  /* fallback for old browsers */
-		background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
-		background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-	}
-`;
-
-const Span = styled.span`
-	display: flex;
-	justify-content: space-evenly;
-	align-items: center;
-	gap: 5px;
-`;
-
-const LoginLink = styled(Link)`
-	text-decoration: underline;
-	color: inherit;
-`;
 
 export default Signup;
