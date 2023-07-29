@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import styled from 'styled-components';
+
+import { AiOutlineDelete } from 'react-icons/ai';
 
 const Card = ({ imgSrc, imgAlt, price, title }) => {
     const [qty, setQty] = useState(1);
@@ -9,51 +10,32 @@ const Card = ({ imgSrc, imgAlt, price, title }) => {
     const DecreaseQty = () => {
         setQty(prevQty => prevQty - 1);
     }
+    const HandleRemoveFromCart = () => {
+        console.log('clicked');
+    }
+    const HandleCartClick = () => {
+        console.log('cart clicked')
+    }
     return (
-        <Container>
-            <ImgContainer>
-                <Img src={imgSrc} alt={imgAlt} />
-            </ImgContainer>
-            <Content>
-                <div className='text-3xl font-bold underline'>{title}</div>
+        <div className='h-[25vh] flex gap-4 p-2 cursor-pointer ' onClick={HandleCartClick}>
+            <div className='max-w-[65%] max-h-[65%]'>
+                <img src={imgSrc} alt={imgAlt} className='w-[100%] h-[100%] object-cover mb-2' />
+                <div>
+                    <button onClick={IncreaseQty} className='bg-rose-400 w-[25%] text-slate-100 '>+</button>
+                    <span className='mx-2 w-[50%]'>Qty: {qty}</span>
+                    {qty > 1 && <button onClick={DecreaseQty} className='bg-rose-400 w-[25%] text-slate-100'>-</button>}
+                </div>
+            </div>
+            <div>
+                <div className='uppercase tracking-widest'>{title}</div>
                 <h6>Price: Rs.{price}</h6>
-                <QtyContainer>
-                    <button onClick={IncreaseQty}>+</button>
-                    <span>Quantity: {qty}</span>
-                    {qty > 1 && <button onClick={DecreaseQty}>-</button>}
-                </QtyContainer>
-                <button>Remove from Cart</button>
-            </Content>
-        </Container>
+                <button className='bg-rose-400 w-[100%] h-[30px] mt-2 flex items-center justify-evenly text-slate-100' onClick={HandleRemoveFromCart}>
+                    <AiOutlineDelete />
+                    Remove
+                </button>
+            </div>
+        </div>
     )
 }
-
-const Container = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    border: 2px solid black;
-    margin-inline: 3rem;
-    margin-top: 1rem;
-    width: 50%;
-`;
-const ImgContainer = styled.div`
-    height: 200px;
-    width: 200px;
-`;
-const Img = styled.img`
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-`;
-const QtyContainer = styled.div`
-    display: flex;
-`;
-
-const Content = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-`;
 
 export default Card
