@@ -7,11 +7,11 @@ import { Link } from 'react-router-dom';
 
 const NavBarBottom = () => (
 	<div className='w-[100%] h-[8vh] bg-gradient-to-r from-rose-500 via-pink-500 to-fuchsia-900 fixed bottom-0 left-0 flex justify-evenly items-center lg:hidden'>
-		<Link className='no-underline text-slate-100' to='/products/women'>
-			Women
+		<Link className='no-underline text-slate-100' to='/products/female'>
+			Female
 		</Link>
-		<Link className='no-underline text-slate-100' to='/products/men'>
-			Men
+		<Link className='no-underline text-slate-100' to='/products/male'>
+			Male
 		</Link>
 		<Link className='no-underline text-slate-100' to='/products/children'>Children</Link>
 

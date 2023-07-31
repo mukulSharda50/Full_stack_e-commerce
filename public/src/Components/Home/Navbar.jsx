@@ -19,7 +19,7 @@ const Navbar = () => {
 	}
 	const pass = () => { }
 	return (
-		<div className='bg-gradient-to-r from-violet-500 via-pink-600 to-slate-900 min-h-[5vh] flex items-center justify-between p-2 gap-3 '>
+		<div className='bg-gradient-to-r from-violet-500 via-pink-600 to-slate-900 flex items-center justify-between p-2 gap-3 w-full h-[8vh]'>
 			<div className='flex items-center justify-between gap-2 lg:min-h-[7vh]'>
 				<Link to='/'>
 					<FaAirbnb size={32} className='' color='text-slate-200' />
@@ -28,10 +28,10 @@ const Navbar = () => {
 			</div>
 
 			<div className='hidden lg:block lg:flex lg:space-evenly lg:items-center'>
-				<Link className='no-underline text-slate-100 px-5 hover:bg-slate-800' to='/products/men'>
+				<Link className='no-underline text-slate-100 px-5 hover:bg-slate-800' to='/products/male'>
 					Men
 				</Link>
-				<Link className='no-underline text-slate-100 px-5 hover:bg-slate-800' to='/products/women'>
+				<Link className='no-underline text-slate-100 px-5 hover:bg-slate-800' to='/products/female'>
 					Women
 				</Link>
 				<Link className='no-underline text-slate-100 px-5 hover:bg-slate-800' to='/products/children'>Children</Link>
