@@ -1,0 +1,3 @@
+[submodule "server"]
+	path = server
+	url = https://github.com/mukulSharda50/backend_ecommerce.git
